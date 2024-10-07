@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./CSS/style.css">
+    <title>Pet Depot</title>
+     <!-- External icon libraries -->
+     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <!--Mounting -->
+    <div id="app">
+        <header>
+
+            <nav>
+              <a href="#" v-on:click="changeSection('Home')">Home</a>
+              <a href="#"  v-on:click="changeSection('About')">About</a>
+              <a href="#"  v-on:click="changeSection('Store')">Store</a>
+              <div class="cart">
+                <a href="#"  v-on:click="changeSection('Checkout')"><i class="ri-shopping-cart-2-line"></i><span><i>{{cartCount}}</i></span></a>
+
+
+              </div>
+             
+              
+            </nav>
+        </header>
+
+        <div class="item">
+            <img src="./Images/samurai-silhouette-fantasy-4k-wallpaper-uhdpaper.com-165@3@a.jpg" alt="">
+        </div>
+       
+
+        <div class="Store" v-if="currentSection === 'Store'">
+          <h1 v-text="sitename"></h1>
+          <div class="Products">
+            <div class="product1">
+              <div class="img-container">
+                  <img v-bind:src="product.Images" alt="">
+
+              </div>
+              
+              <div class="text">
+                  <h2 v-html="product.title"></h2>
+                  <p v-html="product.description"></p>
+                  <p>Price: {{product.price}}</p>
+                  <button id="addToCart" v-on:click="addToCart" v-if="canAddToCart">
+                    Add to Cart
+                  </button>
+                  <button disabled='disabled' v-else>
+                    Add to Cart
+                  </button>
+
+              </div>
+             
+          </div>
+          </div>
+            
+           
+        </div>
+
+
+        </div>
+
+        
+    </div>
+
+
+
+    <script type="text/javascript">
+         // vue instance
+      let webstore = new Vue({ // vue contructor
+        el: '#app', // dom mounting point
+        data: {
+          
+          sitename: "Vue.js Samurai Depot",
+          currentSection: 'Store',   // current store we start at 
+        
+        
+        product:{
+                id: 1001,
+                title: "Samurai Sword, 3kg steel",
+                name: "Samurai Cat",
+                description: "A long samurai sword <span>great<span>, "+"for your samurai cat endavors",
+                price: 1000.00,
+                Images: "./Images/pngwing.com (1).png",
+                Inventory : 5
+                },
+                cart: []
+                
+                
+                }, 
+                
+      
+        methods: {
+          addToCart:function(){
+            this.cart.push(this.product.id);
+            console.log("cart content:", this.cart)
+
+            
+
+            
+          },
+          changeSection:function(section){
+            this.currentSection = section;
+          }
+         
+          
+
+      
+
+        },
+        computed:{
+              cartCount: function(){
+                return this.cart.length || "";
+
+              },
+              canAddToCart: function(){
+                return this.product.Inventory > this.cartCount;
+
+              }
+            }
+        
+      })
+
+     
+
+
+    </script>
+    
+  </body>
+</html>
